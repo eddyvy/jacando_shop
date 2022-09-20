@@ -6,6 +6,7 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
 } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
+import cors from 'cors'
 import { healthController } from './health/controller'
 
 const typeDefs = gql`
@@ -40,6 +41,7 @@ export async function start() {
   const port = isNaN(APP_PORT) ? 4000 : APP_PORT
 
   const app = express()
+  app.use(cors())
   const httpServer = http.createServer(app)
 
   const server = new ApolloServer({
