@@ -1,12 +1,13 @@
 import { GraphQLSchema } from 'graphql/type/schema'
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge'
 import { mergeSchemas } from '@graphql-tools/schema'
-import { vegetablesDef, vegetablesRes } from '../vegetable'
 import { productDef } from '../product'
+import { vegetablesDef, vegetablesRes } from '../vegetable'
+import { fruitsDef, fruitsRes } from '../fruits'
 
-const typeDefs = mergeTypeDefs([productDef, vegetablesDef])
+const typeDefs = mergeTypeDefs([productDef, fruitsDef, vegetablesDef])
 
-const resolvers = mergeResolvers([vegetablesRes])
+const resolvers = mergeResolvers([fruitsRes, vegetablesRes])
 
 export const appSchema: GraphQLSchema = mergeSchemas({
   typeDefs,

@@ -3,6 +3,7 @@ import { Vegetable } from './types'
 export const vegetableFixtures: Vegetable[] = [
   {
     id: 1,
+    category: 'vegetable',
     price: 2.5,
     name: 'broccoli',
     description:
@@ -14,6 +15,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 2,
+    category: 'vegetable',
     price: 1.75,
     name: 'spinach',
     description:
@@ -25,6 +27,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 3,
+    category: 'vegetable',
     price: 1.02,
     name: 'peas',
     description:
@@ -36,6 +39,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 4,
+    category: 'vegetable',
     price: 1.75,
     name: 'cucumber',
     description:
@@ -47,6 +51,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 5,
+    category: 'vegetable',
     price: 3.03,
     name: 'eggplant',
     description:
@@ -59,6 +64,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 6,
+    category: 'vegetable',
     price: 3.42,
     name: 'potato',
     description:
@@ -70,6 +76,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 7,
+    category: 'vegetable',
     price: 1.25,
     name: 'tomato',
     description:
@@ -81,6 +88,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 8,
+    category: 'vegetable',
     price: 8.45,
     name: 'pumpkin',
     description:
@@ -92,6 +100,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 9,
+    category: 'vegetable',
     price: 2.1,
     name: 'corn',
     description:
@@ -103,6 +112,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 10,
+    category: 'vegetable',
     price: 4.03,
     name: 'mushroom',
     description:
@@ -115,6 +125,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 11,
+    category: 'vegetable',
     price: 0.99,
     name: 'onion',
     description:
@@ -126,6 +137,7 @@ export const vegetableFixtures: Vegetable[] = [
   },
   {
     id: 12,
+    category: 'vegetable',
     price: 1.96,
     name: 'bell pepper',
     description:

@@ -8,6 +8,7 @@ export const vegetablesDef = gql`
 
   type Vegetable implements Product {
     id: Int!
+    category: Category!
     name: String!
     price: Float!
     description: String!
