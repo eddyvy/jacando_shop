@@ -3,5 +3,25 @@
   "version": "1.0.0",
   "author": "Eddy <edwardyue93@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "docker compose --env-file ./backend/.env build",
+    "up": "docker compose --env-file ./backend/.env up -d",
+    "stop": "docker compose stop",
+    "build:db": "docker compose --env-file ./backend/.env build database",
+    "up:db": "docker compose --env-file ./backend/.env up database -d",
+    "stop:db": "docker compose stop database",
+    "rm:db": "docker compose rm database -s -f -v",
+    "logs:db": "docker compose logs database -f",
+    "build:back": "docker compose --env-file ./backend/.env build backend",
+    "up:back": "docker compose up backend -d",
+    "stop:back": "docker compose stop backend",
+    "rm:back": "docker compose rm backend -s -f -v",
+    "logs:back": "docker compose logs backend -f",
+    "build:front": "docker compose --env-file ./backend/.env build frontend",
+    "up:front": "docker compose up frontend -d",
+    "stop:front": "docker compose stop frontend",
+    "rm:front": "docker compose rm frontend -s -f -v",
+    "logs:front": "docker compose logs frontend -f"
+  },
   "devDependencies": {}
 }
