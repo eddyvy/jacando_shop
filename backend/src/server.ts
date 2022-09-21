@@ -6,8 +6,8 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
 } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
-import cors from 'cors'
-import { healthController } from './health/controller'
+import { applyExpressMiddlewares } from './server/middleware'
+import { applyExpressRouter } from './server/router'
 
 const typeDefs = gql`
   type Book {
@@ -41,7 +41,6 @@ export async function start() {
   const port = isNaN(APP_PORT) ? 4000 : APP_PORT
 
   const app = express()
-  app.use(cors())
   const httpServer = http.createServer(app)
 
   const server = new ApolloServer({
@@ -56,13 +55,15 @@ export async function start() {
     ],
   })
 
-  app.get('/health', healthController)
+  applyExpressMiddlewares(app)
+  applyExpressRouter(app)
 
   await server.start()
   server.applyMiddleware({
     app,
-    path: '/',
+    path: '/graphql',
   })
+
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve))
 
   return `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
