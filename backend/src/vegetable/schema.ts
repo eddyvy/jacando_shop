@@ -20,9 +20,8 @@ export const vegetablesDef = gql`
 
 export const vegetablesRes = {
   Query: {
-    vegetables(offset: number, limit: number) {
-      console.log(offset, limit)
-      return vegetableFixtures
+    vegetables(_, { offset, limit }: { offset: number; limit: number }) {
+      return vegetableFixtures.slice(offset, limit)
     },
   },
 }

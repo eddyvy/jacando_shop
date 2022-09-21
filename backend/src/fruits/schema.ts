@@ -20,9 +20,8 @@ export const fruitsDef = gql`
 
 export const fruitsRes = {
   Query: {
-    fruits(offset: number, limit: number) {
-      console.log(offset, limit)
-      return fruitFixtures
+    fruits(_, { offset, limit }: { offset: number; limit: number }) {
+      return fruitFixtures.slice(offset, limit)
     },
   },
 }

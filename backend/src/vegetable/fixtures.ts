@@ -147,4 +147,17 @@ export const vegetableFixtures: Vegetable[] = [
     isLocal: false,
     image: 'bell-pepper.png',
   },
+  {
+    id: 33,
+    category: 'vegetable',
+    price: 0.88,
+    name: 'carrot',
+    description:
+      'Among common varieties root shapes range from globular to long,' +
+      'with lower ends blunt to pointed. Besides the orange-coloured roots,' +
+      'white-, yellow-, and purple-fleshed varieties are known.',
+    stock: 33,
+    isLocal: false,
+    image: 'carrot.png',
+  },
 ]
