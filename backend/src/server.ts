@@ -6,6 +6,7 @@ import {
 } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
 import { appSchema, applyExpressMiddlewares, applyExpressRouter } from './app'
+import { connectDb } from './app/db'
 
 export function buildExpress() {
   const app = express()
@@ -31,6 +32,8 @@ export async function start() {
       ApolloServerPluginLandingPageLocalDefault({ embed: true }),
     ],
   })
+
+  await connectDb()
 
   await server.start()
 
