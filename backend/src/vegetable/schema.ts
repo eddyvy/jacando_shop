@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server'
-import { vegetableFixtures } from './fixtures'
+import { readVegetables } from './service'
 
 export const vegetablesDef = gql`
   type Query {
@@ -21,7 +21,7 @@ export const vegetablesDef = gql`
 export const vegetablesRes = {
   Query: {
     vegetables(_, { offset, limit }: { offset: number; limit: number }) {
-      return vegetableFixtures.slice(offset, limit)
+      return readVegetables(offset, limit)
     },
   },
 }

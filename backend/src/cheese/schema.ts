@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server'
-import { cheeseFixtures } from './fixtures'
+import { readCheeses } from './service'
 
 export const cheesesDef = gql`
   type Query {
@@ -21,7 +21,7 @@ export const cheesesDef = gql`
 export const cheesesRes = {
   Query: {
     cheeses(_, { offset, limit }: { offset: number; limit: number }) {
-      return cheeseFixtures.slice(offset, limit)
+      return readCheeses(offset, limit)
     },
   },
 }
