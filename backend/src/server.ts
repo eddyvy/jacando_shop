@@ -7,11 +7,18 @@ import {
 import { ApolloServer } from 'apollo-server-express'
 import { appSchema, applyExpressMiddlewares, applyExpressRouter } from './app'
 
+export function buildExpress() {
+  const app = express()
+  applyExpressMiddlewares(app)
+  applyExpressRouter(app)
+  return app
+}
+
 export async function start() {
   const APP_PORT = Number(process.env.APP_PORT)
   const port = isNaN(APP_PORT) ? 4000 : APP_PORT
 
-  const app = express()
+  const app = buildExpress()
   const httpServer = http.createServer(app)
 
   const server = new ApolloServer({
@@ -25,10 +32,8 @@ export async function start() {
     ],
   })
 
-  applyExpressMiddlewares(app)
-  applyExpressRouter(app)
-
   await server.start()
+
   server.applyMiddleware({
     app,
     path: '/',
