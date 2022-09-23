@@ -5,7 +5,12 @@ export const ORDERS_COLLECTION = 'orders'
 
 const ordersDbSchema = new Schema<Order>({
   id: { type: Number, index: true, unique: true, require: true },
-  products: [{ type: Schema.Types.ObjectId, ref: 'products', require: true }],
+  products: [
+    {
+      product: { type: Schema.Types.ObjectId, ref: 'products', require: true },
+      quantity: { type: Number, require: true, min: 1 },
+    },
+  ],
   price: { type: Number, require: true },
 })
 

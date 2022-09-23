@@ -17,6 +17,11 @@ export const ordersDef = gql`
   }
 
   type OrderProduct {
+    product: OrderProductSingle
+    quantity: Int!
+  }
+
+  type OrderProductSingle {
     id: Int!
     category: Category!
     name: String!
