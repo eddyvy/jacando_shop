@@ -1,3 +1,6 @@
+import { Cheese } from '../cheese'
+import { Fruit } from '../fruits'
+import { Vegetable } from '../vegetable'
 import { PRODUCT_CATEGORIES } from './constants'
 
 export type Category = typeof PRODUCT_CATEGORIES[number]
@@ -11,3 +14,8 @@ export type Product = {
   stock: number
   image: string
 }
+
+export type ProductDb = Product &
+  Partial<Omit<Vegetable, keyof Product>> &
+  Partial<Omit<Fruit, keyof Product>> &
+  Partial<Omit<Cheese, keyof Product>>

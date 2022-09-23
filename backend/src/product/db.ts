@@ -1,8 +1,9 @@
 import { Schema, model } from 'mongoose'
+import { ProductDb } from './types'
 
 export const PRODUCTS_COLLECTION = 'products'
 
-const productsDbSchema = new Schema({
+const productsDbSchema = new Schema<ProductDb>({
   id: { type: Number, index: true, unique: true, require: true },
   category: { type: String, required: true },
   name: { type: String, required: true },

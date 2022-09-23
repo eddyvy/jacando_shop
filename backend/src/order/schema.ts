@@ -1,4 +1,5 @@
 import { gql } from 'apollo-server'
+import { createOrderFromProductIds, readOrders } from './service'
 
 export const ordersDef = gql`
   type Query {
@@ -27,17 +28,12 @@ export const ordersDef = gql`
 export const ordersRes = {
   Query: {
     orders() {
-      return []
+      return readOrders()
     },
   },
   Mutation: {
-    addOrder(...args: any[]) {
-      console.log(args)
-      return {
-        id: 0,
-        products: [],
-        price: 0,
-      }
+    addOrder(_, { products }) {
+      return createOrderFromProductIds(products)
     },
   },
 }
