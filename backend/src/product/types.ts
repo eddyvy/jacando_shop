@@ -1,3 +1,4 @@
+import { Document } from 'mongoose'
 import { Cheese } from '../cheese'
 import { Fruit } from '../fruits'
 import { Vegetable } from '../vegetable'
@@ -19,3 +20,5 @@ export type ProductDb = Product &
   Partial<Omit<Vegetable, keyof Product>> &
   Partial<Omit<Fruit, keyof Product>> &
   Partial<Omit<Cheese, keyof Product>>
+
+export type ProductDocument = Document & ProductDb

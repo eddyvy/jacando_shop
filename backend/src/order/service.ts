@@ -1,4 +1,4 @@
-import { productsModel } from '../product'
+import { readProductDbByIds, reduceStock } from '../product'
 import { ordersModel } from './db'
 import { Order, OrderDbInput } from './types'
 
@@ -7,17 +7,16 @@ export async function createOrder(orderInput: OrderDbInput): Promise<Order> {
   return await createdOrder.save()
 }
 
-export async function createOrderFromProductIds(pIds: number[]) {
+export async function readLastOrderId(): Promise<number> {
   const lastOrder = await ordersModel.findOne().sort({ id: -1 })
-  const id =
-    lastOrder && typeof lastOrder.id === 'number' ? lastOrder.id + 1 : 1
+  return lastOrder && typeof lastOrder.id === 'number' ? lastOrder.id + 1 : 1
+}
 
-  const productsDocuments = await productsModel
-    .find()
-    .where({ id: { $in: pIds } })
+export async function createOrderFromProductIds(pIds: number[]) {
+  const id = await readLastOrderId()
+  const productsDocuments = await readProductDbByIds(pIds)
 
   const quantitiesMap: Record<number, number> = {}
-
   pIds.forEach((id) => {
     if (quantitiesMap[id]) {
       quantitiesMap[id]++
@@ -26,21 +25,25 @@ export async function createOrderFromProductIds(pIds: number[]) {
     }
   })
 
-  const products = productsDocuments.map(
-    (p): OrderDbInput['products'][number] => {
-      if (quantitiesMap[p.id] > p.stock)
-        throw new Error(`Not enough '${p.name}' in stock!`)
+  const products = await Promise.all(
+    productsDocuments.map(
+      async (p): Promise<OrderDbInput['products'][number]> => {
+        const quantity =
+          quantitiesMap[p.id] > p.stock ? p.stock : quantitiesMap[p.id]
 
-      return {
-        product: p,
-        quantity: quantitiesMap[p.id],
-      }
-    },
+        await reduceStock(p, quantity)
+
+        return {
+          product: p,
+          quantity,
+        }
+      },
+    ),
   )
 
   const price = products.reduce((a, b) => a + b.product.price * b.quantity, 0)
 
-  return createOrder({
+  return await createOrder({
     id,
     products,
     price,
