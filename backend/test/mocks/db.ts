@@ -4,6 +4,7 @@ const mockedExec = jest.fn()
 const mockedSave = jest.fn()
 const mockedWhere = jest.fn()
 const mockedFind = jest.fn()
+const mockedPopulate = jest.fn()
 const mockedModelConstructor = jest.fn()
 class MockedSchema {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -21,6 +22,7 @@ export const mockedDb = {
     where: mockedWhere,
     limit: mockedLimit,
     skip: mockedSkip,
+    populate: mockedPopulate,
     exec: mockedExec,
   }),
 
@@ -30,6 +32,7 @@ export const mockedDb = {
   mockedSave,
   mockedLimit,
   mockedSkip,
+  mockedPopulate,
   mockedExec,
 }
 
@@ -37,6 +40,7 @@ mockedSave.mockReturnValue(mockedDb.model())
 mockedFind.mockReturnValue(mockedDb.model())
 mockedWhere.mockReturnValue(mockedDb.model())
 mockedLimit.mockReturnValue(mockedDb.model())
+mockedPopulate.mockReturnValue(mockedDb.model())
 mockedSkip.mockReturnValue(mockedDb.model())
 
 jest.mock('mongoose', () => mockedDb)

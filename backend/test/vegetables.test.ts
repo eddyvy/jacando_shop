@@ -67,38 +67,6 @@ describe('Vegetables', () => {
     expect(mockedDb.mockedExec).toHaveBeenCalledTimes(1)
   })
 
-  test('Should return the first 5 vegetables', async () => {
-    mockedDb.mockedExec.mockReturnValue(vegetableFixtures.slice(0, 5))
-
-    const testServer = buildTestServer()
-    const query = `
-    query VegetablesQuery($offset: Int!, $limit: Int!) {
-      vegetables(offset: $offset, limit: $limit) {
-        id
-        category
-        name
-        price
-        description
-        stock
-        image
-        isLocal
-      }
-    }`
-    const variables = { offset: 0, limit: 5 }
-
-    const res = await testServer.executeOperation({ query, variables })
-    expect(res.errors).toBeUndefined()
-    expect(res.data).toEqual({
-      vegetables: vegetableFixtures.slice(0, 5),
-    })
-    expect(mockedDb.mockedFind).toHaveBeenCalledTimes(1)
-    expect(mockedDb.mockedLimit).toHaveBeenCalledTimes(1)
-    expect(mockedDb.mockedLimit).toHaveBeenCalledWith(5)
-    expect(mockedDb.mockedSkip).toHaveBeenCalledTimes(1)
-    expect(mockedDb.mockedSkip).toHaveBeenCalledWith(0)
-    expect(mockedDb.mockedExec).toHaveBeenCalledTimes(1)
-  })
-
   test('Should return an empty array if the database returns it', async () => {
     mockedDb.mockedExec.mockReturnValue([])
 
