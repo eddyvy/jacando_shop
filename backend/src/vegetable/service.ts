@@ -1,11 +1,16 @@
-import { vegetablesModel } from './db'
+import { productsModel } from '../product'
 import { Vegetable } from './types'
 
 export async function createVegetable(vegetable: Vegetable) {
-  const createdVeg = new vegetablesModel(vegetable)
+  const createdVeg = new productsModel(vegetable)
   await createdVeg.save()
 }
 
 export async function readVegetables(offset: number, limit: number) {
-  return await vegetablesModel.find().limit(limit).skip(offset).exec()
+  return await productsModel
+    .find()
+    .where({ category: 'vegetable' })
+    .limit(limit)
+    .skip(offset)
+    .exec()
 }

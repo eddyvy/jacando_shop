@@ -1,11 +1,16 @@
-import { cheesesModel } from './db'
+import { productsModel } from '../product'
 import { Cheese } from './types'
 
 export async function createCheese(cheese: Cheese) {
-  const createdCheese = new cheesesModel(cheese)
+  const createdCheese = new productsModel(cheese)
   await createdCheese.save()
 }
 
 export async function readCheeses(offset: number, limit: number) {
-  return await cheesesModel.find().limit(limit).skip(offset).exec()
+  return await productsModel
+    .find()
+    .where({ category: 'cheese' })
+    .limit(limit)
+    .skip(offset)
+    .exec()
 }

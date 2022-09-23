@@ -1,16 +1,11 @@
 import { Request, Response } from 'express'
-import { cheeseFixtures, cheesesModel, createCheese } from '../cheese'
-import { createFruit, fruitFixtures, fruitsModel } from '../fruits'
-import {
-  createVegetable,
-  vegetableFixtures,
-  vegetablesModel,
-} from '../vegetable'
+import { productsModel } from '../product'
+import { cheeseFixtures, createCheese } from '../cheese'
+import { createFruit, fruitFixtures } from '../fruits'
+import { createVegetable, vegetableFixtures } from '../vegetable'
 
 export async function fixturesController(_: Request, res: Response) {
-  await vegetablesModel.deleteMany()
-  await fruitsModel.deleteMany()
-  await cheesesModel.deleteMany()
+  await productsModel.deleteMany()
 
   for (const veg of vegetableFixtures) {
     await createVegetable(veg)
