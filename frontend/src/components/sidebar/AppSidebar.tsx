@@ -4,7 +4,6 @@ import {
   Collapse,
   Divider,
   Fab,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -22,28 +21,31 @@ import vegIcon from '../../assets/img/vegetable.png'
 import fruIcon from '../../assets/img/fruits.png'
 import cheIcon from '../../assets/img/cheese.png'
 import './AppSidebar.sass'
-
-const categories = [
-  {
-    name: 'Vegetables',
-    icon: vegIcon,
-    link: '/vegetables',
-  },
-  {
-    name: 'Fruits',
-    icon: fruIcon,
-    link: '/fruits',
-  },
-  {
-    name: 'Cheese',
-    icon: cheIcon,
-    link: '/cheese',
-  },
-]
+import { routes } from '../../app'
+import { useNavigate } from 'react-router-dom'
 
 export const AppSidebar = () => {
+  const navigate = useNavigate()
   const [openCategories, setOpenCategories] = useState<boolean>(true)
   const [showSidebar, setShowSidebar] = useState<boolean>(false)
+
+  const categories = [
+    {
+      name: 'Vegetables',
+      icon: vegIcon,
+      path: routes.VEGETABLES,
+    },
+    {
+      name: 'Fruits',
+      icon: fruIcon,
+      path: routes.FRUITS,
+    },
+    {
+      name: 'Cheese',
+      icon: cheIcon,
+      path: routes.CHEESE,
+    },
+  ]
 
   const handleClickFloating = () => {
     setShowSidebar(!showSidebar)
@@ -51,6 +53,10 @@ export const AppSidebar = () => {
 
   const handleClickCategories = () => {
     setOpenCategories(!openCategories)
+  }
+
+  const handleClickNavigation = (path: string) => {
+    navigate(path)
   }
 
   return (
@@ -62,7 +68,9 @@ export const AppSidebar = () => {
       <Box sx={{ position: 'relative', height: '100%' }}>
         <List sx={{ position: 'sticky', top: '8.5rem' }}>
           <ListItem key='home'>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => handleClickNavigation(routes.HOME)}
+            >
               <ListItemIcon>
                 <Home color='primary' fontSize='large' />
               </ListItemIcon>
@@ -86,9 +94,11 @@ export const AppSidebar = () => {
           <Divider />
           <Collapse in={openCategories} timeout='auto' unmountOnExit>
             <List component='div'>
-              {categories.map(({ name, icon }) => (
+              {categories.map(({ name, icon, path }) => (
                 <ListItem key={name} disablePadding>
-                  <ListItemButton>
+                  <ListItemButton
+                    onClick={() => handleClickNavigation(path)}
+                  >
                     <div className='sidebarImg'>
                       <img src={icon} alt={name} />
                     </div>
@@ -105,9 +115,7 @@ export const AppSidebar = () => {
       </Box>
       <div className='floatingButton'>
         <Fab onClick={handleClickFloating} color='primary'>
-          <IconButton color='inherit'>
-            <Menu />
-          </IconButton>
+          <Menu color='inherit' />
         </Fab>
       </div>
     </nav>

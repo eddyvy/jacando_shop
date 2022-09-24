@@ -1,13 +1,12 @@
 import { ThemeProvider } from '@mui/material'
-import { AppPageLayout } from './components/layout'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './app'
 import { theme } from './theme'
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <AppPageLayout>
-        <h1>Hello World!</h1>
-      </AppPageLayout>
+      <RouterProvider router={router} />
     </ThemeProvider>
   )
 }
