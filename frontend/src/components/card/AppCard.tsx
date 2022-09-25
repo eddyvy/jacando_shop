@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import { AddShoppingCart } from '@mui/icons-material'
 import './AppCard.sass'
+import { capitalize, getImage } from '../../app'
 
 type Props = {
   title: string
@@ -27,18 +28,11 @@ export const AppCard = ({
   return (
     <Card sx={{ width: '22rem' }}>
       <div className='appCardImg'>
-        <img src={image} alt={'vegetables'} />
+        <img src={getImage(image)} alt={'vegetables'} />
       </div>
       <CardContent>
         <Typography gutterBottom variant='h5' component='div'>
-          {title}
-        </Typography>
-        <Typography
-          variant='body2'
-          color='text.secondary'
-          fontSize='small'
-        >
-          {description}
+          {capitalize(title)}
         </Typography>
         <Box
           sx={{
@@ -52,10 +46,17 @@ export const AppCard = ({
           <Typography fontSize='medium'>{price} CHF</Typography>
           <Typography fontSize='medium'>{stock}</Typography>
         </Box>
+        <CardActions>
+          <Button startIcon={<AddShoppingCart />}>Add to cart</Button>
+        </CardActions>
+        <Typography
+          variant='body2'
+          color='text.secondary'
+          fontSize='small'
+        >
+          {description}
+        </Typography>
       </CardContent>
-      <CardActions>
-        <Button startIcon={<AddShoppingCart />}>Add to cart</Button>
-      </CardActions>
     </Card>
   )
 }

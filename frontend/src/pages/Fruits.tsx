@@ -10,7 +10,7 @@ export const Fruits = () => {
   })
   return (
     <div id='fruitsPage' className='page'>
-      <h1>Fruits Page</h1>
+      <h1>Fruits</h1>
       <p>Loading: {loading}</p>
       <p>Error: {JSON.stringify(error)}</p>
       <p>Data: {JSON.stringify(data)}</p>

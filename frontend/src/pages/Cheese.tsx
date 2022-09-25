@@ -10,7 +10,7 @@ export const Cheese = () => {
   })
   return (
     <div id='cheesePage' className='page'>
-      <h1>Cheese Page</h1>
+      <h1>Cheese</h1>
       <p>Loading: {loading}</p>
       <p>Error: {JSON.stringify(error)}</p>
       <p>Data: {JSON.stringify(data)}</p>
