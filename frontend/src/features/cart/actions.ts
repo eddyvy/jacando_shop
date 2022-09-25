@@ -21,10 +21,13 @@ export function removeFromCartAction(
 
   const prodIds = state.products.map((p) => p.id)
   const fInd = prodIds.indexOf(action.payload.id)
-  if (fInd === -1) return cartInitialState
+  if (fInd === -1) return state
+
+  const products = [...state.products]
+  products.splice(fInd, 1)
 
   return {
-    products: state.products.splice(fInd, 1),
+    products,
     price: state.price - action.payload.price,
   }
 }

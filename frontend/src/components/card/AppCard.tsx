@@ -7,16 +7,43 @@ import {
   Typography,
 } from '@mui/material'
 import { AddShoppingCart } from '@mui/icons-material'
-import './AppCard.sass'
-import { capitalize, getImage } from '../../app'
+import {
+  capitalize,
+  getImage,
+  useAppDispatch,
+  useAppSelector,
+} from '../../app'
 import { Product } from '../../features/product'
+import { addToCart, removeFromCart } from '../../features/cart'
+import { ProductCounter } from '../counter'
+import './AppCard.sass'
 
 type Props = {
   product: Product
 }
 
 export const AppCard = ({ product }: Props) => {
-  const { name: title, description, image, price, stock } = product
+  const {
+    id,
+    name: title,
+    description,
+    image,
+    price,
+    stock,
+  } = product
+
+  const dispatch = useAppDispatch()
+  const numOfProdInCart = useAppSelector(
+    (st) => st.cart.products.filter((p) => p.id === id).length,
+  )
+
+  const handleAdd = () => {
+    dispatch(addToCart(product))
+  }
+
+  const handleRemove = () => {
+    dispatch(removeFromCart(product))
+  }
 
   return (
     <Card sx={{ width: '22rem' }}>
@@ -39,8 +66,21 @@ export const AppCard = ({ product }: Props) => {
           <Typography fontSize='medium'>{price} CHF</Typography>
           <Typography fontSize='medium'>{stock}</Typography>
         </Box>
-        <CardActions>
-          <Button startIcon={<AddShoppingCart />}>Add to cart</Button>
+        <CardActions sx={{ height: '3.5rem' }}>
+          {numOfProdInCart === 0 ? (
+            <Button
+              startIcon={<AddShoppingCart />}
+              onClick={handleAdd}
+            >
+              Add to cart
+            </Button>
+          ) : (
+            <ProductCounter
+              count={numOfProdInCart}
+              handleAdd={handleAdd}
+              handleRemove={handleRemove}
+            />
+          )}
         </CardActions>
         <Typography
           variant='body2'
