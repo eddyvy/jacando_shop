@@ -12,12 +12,12 @@ export function loadProductsAction(
     const mapIds: Record<number, true> = {}
     const result: Product[] = []
     arr1.forEach((p) => {
-      if (!mapIds[p.id]) return
+      if (mapIds[p.id]) return
       mapIds[p.id] = true
       result.push(p)
     })
     arr2.forEach((p) => {
-      if (!mapIds[p.id]) return
+      if (mapIds[p.id]) return
       mapIds[p.id] = true
       result.push(p)
     })
