@@ -4,7 +4,10 @@ import {
   Card,
   CardActions,
   CardContent,
+  Rating,
+  Switch,
   Typography,
+  LinearProgress,
 } from '@mui/material'
 import { AddShoppingCart } from '@mui/icons-material'
 import { capitalize, getImage } from '../../app'
@@ -18,7 +21,16 @@ type Props = {
 }
 
 export const AppCard = ({ product }: Props) => {
-  const { name: title, description, image, price, stock } = product
+  const {
+    name: title,
+    description,
+    image,
+    price,
+    stock,
+    isLocal,
+    smellLevel,
+    waterPct,
+  } = product
 
   const { handleAdd, handleRemove, numOfProdInCart } =
     useProductCard(product)
@@ -60,6 +72,55 @@ export const AppCard = ({ product }: Props) => {
             />
           )}
         </CardActions>
+        {isLocal !== undefined && (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              marginBottom: '15px',
+            }}
+          >
+            <Switch
+              disabled
+              defaultChecked={isLocal}
+              color='success'
+            />
+            <Typography
+              fontSize='medium'
+              sx={{ color: isLocal ? 'green' : 'orange' }}
+            >
+              {isLocal ? 'Local food!' : 'Imported food'}
+            </Typography>
+          </Box>
+        )}
+        {waterPct !== undefined && (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginBottom: '15px',
+            }}
+          >
+            <Typography fontSize='medium' sx={{ color: 'blue' }}>
+              Water %
+            </Typography>
+            <LinearProgress variant='determinate' value={waterPct} />
+          </Box>
+        )}
+        {smellLevel !== undefined && (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginBottom: '15px',
+            }}
+          >
+            <Typography fontSize='medium' sx={{ color: 'orange' }}>
+              Smell Level
+            </Typography>
+            <Rating value={smellLevel} readOnly />
+          </Box>
+        )}
         <Typography
           variant='body2'
           color='text.secondary'
