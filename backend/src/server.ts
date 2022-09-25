@@ -26,7 +26,6 @@ export async function start() {
     schema: appSchema,
     csrfPrevention: true,
     cache: 'bounded',
-    introspection: process.env.NODE_ENV !== 'production',
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       ApolloServerPluginLandingPageLocalDefault({ embed: true }),

@@ -21,7 +21,10 @@
     "up:front": "docker compose up frontend -d",
     "stop:front": "docker compose stop frontend",
     "rm:front": "docker compose rm frontend -s -f -v",
-    "logs:front": "docker compose logs frontend -f"
+    "logs:front": "docker compose logs frontend -f",
+    "test:back": "yarn --cwd ./backend test",
+    "test:front": "yarn --cwd ./frontend test",
+    "test:front:watch": "yarn --cwd ./frontend test:watch"
   },
   "devDependencies": {}
 }
