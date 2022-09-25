@@ -9,22 +9,15 @@ import {
 import { AddShoppingCart } from '@mui/icons-material'
 import './AppCard.sass'
 import { capitalize, getImage } from '../../app'
+import { Product } from '../../features/product'
 
 type Props = {
-  title: string
-  description: string
-  image: string
-  price: string
-  stock: string
+  product: Product
 }
 
-export const AppCard = ({
-  title,
-  description,
-  image,
-  price,
-  stock,
-}: Props) => {
+export const AppCard = ({ product }: Props) => {
+  const { name: title, description, image, price, stock } = product
+
   return (
     <Card sx={{ width: '22rem' }}>
       <div className='appCardImg'>

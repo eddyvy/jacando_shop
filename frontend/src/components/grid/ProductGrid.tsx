@@ -7,15 +7,11 @@ import {
   GET_CHEESES,
   GET_FRUITS,
   GET_VEGETABLES,
-  loadProducts,
   Product,
   ProductsState,
 } from '../../features/product'
-import {
-  PAGINATION_LIMIT,
-  useAppDispatch,
-  useAppSelector,
-} from '../../app'
+import { PAGINATION_LIMIT } from '../../app'
+import './ProductGrid.sass'
 
 type Props = {
   category: Category
@@ -26,34 +22,33 @@ const chooseFromCategory = (
 ): {
   query: DocumentNode
   prop: keyof ProductsState
+  totalPages: number
 } => {
   switch (category) {
     case 'cheese':
       return {
         prop: 'cheeses',
         query: GET_CHEESES,
+        totalPages: 1,
       }
     case 'fruit':
       return {
         prop: 'fruits',
         query: GET_FRUITS,
+        totalPages: 4,
       }
     case 'vegetable':
       return {
         prop: 'vegetables',
         query: GET_VEGETABLES,
+        totalPages: 3,
       }
   }
 }
 
 export const ProductGrid = ({ category }: Props): JSX.Element => {
-  const { prop, query } = chooseFromCategory(category)
-  const dispatch = useAppDispatch()
-  const totalProd = useAppSelector((st) => st.products[prop])
-
+  const { prop, query, totalPages } = chooseFromCategory(category)
   const [page, setPage] = useState<number>(0)
-  const [totalPages, setTotalPages] = useState<number>(1)
-  const [pagesCached, setPagesCached] = useState<number[]>([])
 
   const { loading, error, data } = useQuery(query, {
     variables: {
@@ -66,52 +61,25 @@ export const ProductGrid = ({ category }: Props): JSX.Element => {
     setPage(page - 1)
   }
 
-  useEffect(() => {
-    if (!data || pagesCached.includes(page)) return
-
-    dispatch(
-      loadProducts({
-        products: data[prop],
-        category,
-      }),
-    )
-    setPagesCached([...pagesCached, page])
-  }, [data, pagesCached])
-
-  useEffect(() => {
-    const pagesShouldBe =
-      Math.floor(totalProd.length / PAGINATION_LIMIT) + 1
-    if (totalPages < pagesShouldBe) {
-      setTotalPages(totalPages + 1)
-    }
-  }, [totalProd])
-
   return (
     <>
       <Pagination
-        count={totalPages + 1}
+        count={totalPages}
         color='primary'
         onChange={handleChange}
         sx={{ margin: '30px' }}
       />
-      <div className='productsGrid'>
-        {loading ? (
-          <CircularProgress />
-        ) : error || !data[prop] ? (
-          <h4>Error fetching</h4>
-        ) : (
-          data[prop].map((p: Product) => (
-            <AppCard
-              description={p.description}
-              image={p.image}
-              price={p.price.toString()}
-              stock={p.stock.toString()}
-              title={p.name}
-              key={p.id}
-            />
-          ))
-        )}
-      </div>
+      {loading ? (
+        <CircularProgress />
+      ) : error || !data[prop] ? (
+        <h4>Error fetching</h4>
+      ) : (
+        <div className='productsGrid'>
+          {data[prop].map((p: Product) => (
+            <AppCard key={p.id} product={p} />
+          ))}
+        </div>
+      )}
     </>
   )
 }
