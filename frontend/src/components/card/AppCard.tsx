@@ -7,15 +7,10 @@ import {
   Typography,
 } from '@mui/material'
 import { AddShoppingCart } from '@mui/icons-material'
-import {
-  capitalize,
-  getImage,
-  useAppDispatch,
-  useAppSelector,
-} from '../../app'
+import { capitalize, getImage } from '../../app'
 import { Product } from '../../features/product'
-import { addToCart, removeFromCart } from '../../features/cart'
 import { ProductCounter } from '../counter'
+import { useProductCard } from './useProductCard'
 import './AppCard.sass'
 
 type Props = {
@@ -23,27 +18,10 @@ type Props = {
 }
 
 export const AppCard = ({ product }: Props) => {
-  const {
-    id,
-    name: title,
-    description,
-    image,
-    price,
-    stock,
-  } = product
+  const { name: title, description, image, price, stock } = product
 
-  const dispatch = useAppDispatch()
-  const numOfProdInCart = useAppSelector(
-    (st) => st.cart.products.filter((p) => p.id === id).length,
-  )
-
-  const handleAdd = () => {
-    dispatch(addToCart(product))
-  }
-
-  const handleRemove = () => {
-    dispatch(removeFromCart(product))
-  }
+  const { handleAdd, handleRemove, numOfProdInCart } =
+    useProductCard(product)
 
   return (
     <Card sx={{ width: '22rem' }}>
