@@ -33,7 +33,7 @@ export const vegetableFixtures: Vegetable[] = [
     description:
       'A pea is a most commonly green, occasionally golden yellow, or infrequently purple' +
       'pod-shaped vegetable, widely grown as a cool-season vegetable crop.',
-    stock: 7,
+    stock: 18,
     isLocal: true,
     image: 'peas.png',
   },
