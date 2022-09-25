@@ -1,6 +1,16 @@
+import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@apollo/client'
 import { CallMade, CreditCard } from '@mui/icons-material'
-import { Box, Button, Modal, Typography } from '@mui/material'
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Modal,
+  Typography,
+} from '@mui/material'
 import { useAppSelector } from '../../app'
+import { CREATE_ORDER, Order } from '../../features/cart'
 import { getUniqueProducts } from '../../features/product'
 import { CartCard } from '../card'
 
@@ -24,8 +34,21 @@ type Props = {
 
 export const CartModal = ({ open, setOpen }: Props) => {
   const { products, price } = useAppSelector((st) => st.cart)
+  const navigate = useNavigate()
+  const [createOrder, { loading, error }] = useMutation<
+    Order,
+    { products: number[] }
+  >(CREATE_ORDER)
 
   const handleClose = () => setOpen(false)
+
+  const handleBuy = () => {
+    const prodIds = products.map((p) => p.id)
+    createOrder({ variables: { products: prodIds } }).then(() => {
+      alert('Bought succesfully!')
+      navigate(0)
+    })
+  }
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -77,6 +100,11 @@ export const CartModal = ({ open, setOpen }: Props) => {
                 Your shopping cart is currently empty 😕
               </Typography>
             )}
+            {error && (
+              <Typography sx={{ margin: '20px' }} color='error'>
+                It has been an error creating your order
+              </Typography>
+            )}
             <Box
               sx={{
                 display: 'flex',
@@ -95,13 +123,23 @@ export const CartModal = ({ open, setOpen }: Props) => {
               </Button>
               <Button
                 variant='contained'
-                color='success'
-                disabled={products.length === 0}
+                color={error ? 'error' : 'success'}
+                disabled={products.length === 0 || loading}
                 endIcon={<CreditCard />}
                 sx={{ margin: 1 }}
+                onClick={handleBuy}
               >
                 Buy
               </Button>
+              <Backdrop
+                sx={{
+                  color: '#fff',
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={loading}
+              >
+                <CircularProgress color='primary' />
+              </Backdrop>
             </Box>
           </Box>
         </Box>
