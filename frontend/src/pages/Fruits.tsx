@@ -1,9 +1,7 @@
-import { AppPageLayout } from '../components/layout'
-
 export const Fruits = () => {
   return (
-    <AppPageLayout>
+    <div id='fruitsPage' className='page'>
       <h1>Fruits Page</h1>
-    </AppPageLayout>
+    </div>
   )
 }

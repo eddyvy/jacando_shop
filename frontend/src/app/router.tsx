@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { AppPageLayout } from '../components/layout'
 import { Cheese, Fruits, Home, Vegetables } from '../pages'
 
 export const routes = {
@@ -11,18 +12,34 @@ export const routes = {
 export const router = createBrowserRouter([
   {
     path: routes.CHEESE,
-    element: <Cheese />,
+    element: (
+      <AppPageLayout>
+        <Cheese />
+      </AppPageLayout>
+    ),
   },
   {
     path: routes.FRUITS,
-    element: <Fruits />,
+    element: (
+      <AppPageLayout>
+        <Fruits />
+      </AppPageLayout>
+    ),
   },
   {
     path: routes.VEGETABLES,
-    element: <Vegetables />,
+    element: (
+      <AppPageLayout>
+        <Vegetables />
+      </AppPageLayout>
+    ),
   },
   {
     path: routes.HOME,
-    element: <Home />,
+    element: (
+      <AppPageLayout>
+        <Home />
+      </AppPageLayout>
+    ),
   },
 ])
