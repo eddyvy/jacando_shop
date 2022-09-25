@@ -11,5 +11,6 @@ export default defineConfig({
   e2e: {
     specPattern: 'test/integration/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'test/support/index.ts',
+    baseUrl: 'http://localhost',
   },
 })
