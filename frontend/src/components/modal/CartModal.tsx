@@ -1,14 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { CallMade, CreditCard } from '@mui/icons-material'
-import {
-  Backdrop,
-  Box,
-  Button,
-  CircularProgress,
-  Modal,
-  Typography,
-} from '@mui/material'
+import { Box, Button, Modal, Typography } from '@mui/material'
+import Swal from 'sweetalert2'
 import { useAppSelector } from '../../app'
 import { CREATE_ORDER, Order } from '../../features/cart'
 import { getUniqueProducts } from '../../features/product'
@@ -43,10 +37,48 @@ export const CartModal = ({ open, setOpen }: Props) => {
   const handleClose = () => setOpen(false)
 
   const handleBuy = () => {
-    const prodIds = products.map((p) => p.id)
-    createOrder({ variables: { products: prodIds } }).then(() => {
-      alert('Bought succesfully!')
-      navigate(0)
+    setOpen(false)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Articles will be ordered',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, buy it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading()
+            const prodIds = products.map((p) => p.id)
+            createOrder({ variables: { products: prodIds } })
+              .then(() => {
+                Swal.fire({
+                  title: 'Done!',
+                  text: 'Order correctly done!',
+                  icon: 'success',
+                  confirmButtonColor: '#3085d6',
+                }).then(() => {
+                  navigate(0)
+                })
+              })
+              .catch(() => {
+                Swal.fire({
+                  title: 'Erro has occurred!',
+                  text: 'Could not make the order correctly',
+                  icon: 'error',
+                  confirmButtonColor: '#3085d6',
+                }).then(() => {
+                  navigate(0)
+                })
+              })
+          },
+        })
+      } else {
+        setOpen(true)
+      }
     })
   }
 
@@ -131,15 +163,6 @@ export const CartModal = ({ open, setOpen }: Props) => {
               >
                 Buy
               </Button>
-              <Backdrop
-                sx={{
-                  color: '#fff',
-                  zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}
-                open={loading}
-              >
-                <CircularProgress color='primary' />
-              </Backdrop>
             </Box>
           </Box>
         </Box>
