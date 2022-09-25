@@ -1,19 +1,10 @@
-import { useQuery } from '@apollo/client'
-import { GET_CHEESES } from '../features/product'
+import { ProductGrid } from '../components/grid'
 
 export const Cheese = () => {
-  const { loading, error, data } = useQuery(GET_CHEESES, {
-    variables: {
-      offset: 0,
-      limit: 5,
-    },
-  })
   return (
-    <div id='cheesePage' className='page'>
+    <div id='cheesePage' className='page categoryPage'>
       <h1>Cheese</h1>
-      <p>Loading: {loading}</p>
-      <p>Error: {JSON.stringify(error)}</p>
-      <p>Data: {JSON.stringify(data)}</p>
+      <ProductGrid category='cheese' />
     </div>
   )
 }

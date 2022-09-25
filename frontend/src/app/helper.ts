@@ -1,8 +1,8 @@
 import apple from '../assets/img/apple.png'
 import avocado from '../assets/img/avocado.png'
 import banana from '../assets/img/banana.png'
-import bell from '../assets/img/bell-pepper.png'
-import blue from '../assets/img/blue-cheese.png'
+import bellPepper from '../assets/img/bell-pepper.png'
+import blueCheese from '../assets/img/blue-cheese.png'
 import blueberry from '../assets/img/blueberry.png'
 import broccoli from '../assets/img/broccoli.png'
 import carrot from '../assets/img/carrot.png'
@@ -44,10 +44,10 @@ export const getImage = (file: string): string => {
       return avocado
     case 'banana.png':
       return banana
-    case 'bell.png':
-      return bell
-    case 'blue.png':
-      return blue
+    case 'bell-pepper.png':
+      return bellPepper
+    case 'blue-cheese.png':
+      return blueCheese
     case 'blueberry.png':
       return blueberry
     case 'broccoli.png':
