@@ -9,7 +9,7 @@ export const errorInitialState: ErrorState = {
 }
 
 const ErrorSlice = createSlice({
-  name: 'Error',
+  name: 'error',
   initialState: errorInitialState,
   reducers: {
     setError: setErrorAction,
