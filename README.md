@@ -52,6 +52,12 @@ Frontend tests will require to have almost the frontend docker container running
 yarn test:front
 ```
 
+To run the Cypress tests with the browser run:
+
+```shell
+yarn test:front:watch
+```
+
 ## API Documentation
 
 API documentation have been done with Postman and can be found at the next [link](https://documenter.getpostman.com/view/14255685/2s83S2DE4X).
