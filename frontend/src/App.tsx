@@ -1,13 +1,15 @@
+import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from '@mui/material'
 import { RouterProvider } from 'react-router-dom'
-import { router } from './app'
-import { theme } from './theme'
+import { client, router, theme } from './app'
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </ApolloProvider>
   )
 }
 
